@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = {
   mode: 'development',
   entry: ['./src/main.tsx'],
@@ -17,6 +19,7 @@ module.exports = {
   devtool: 'cheap-module-source-map',
   devServer: {
     open: true,
+    historyApiFallback: true,
   },
   optimization: {
     splitChunks: {
