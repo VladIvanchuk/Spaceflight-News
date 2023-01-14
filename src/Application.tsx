@@ -1,7 +1,12 @@
 //Core
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { Navigate, Routes, Route, Outlet } from 'react-router-dom';
+import {
+  Navigate,
+  Routes,
+  Route,
+  BrowserRouter as Router,
+} from 'react-router-dom';
+import { QueryClientProvider, QueryClient } from 'react-query';
 
 //Components
 import { Article } from './pages/Article';
@@ -11,16 +16,18 @@ import { Home } from './pages/Home';
 import './assets/styles/Application.scss';
 
 const Application: React.FC = () => {
+  const queryClient = new QueryClient();
+
   return (
-    <Router>
-      <Routes>
-        <Route path='/home' element={<Outlet />}>
-          <Route path='' element={<Home />} />
-          <Route path='id' element={<Article />} />
-        </Route>
-        <Route path='*' element={<Navigate to='/home' replace />} />
-      </Routes>
-    </Router>
+    <QueryClientProvider client={queryClient}>
+        <Router>
+          <Routes>
+            <Route path='/news' element={<Home />} />
+            <Route path='/news/:id' element={<Article />} />
+            <Route path='*' element={<Navigate to='/news' />} />
+          </Routes>
+        </Router>
+    </QueryClientProvider>
   );
 };
 
